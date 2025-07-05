@@ -25,6 +25,28 @@
 //RULE 4: If colXbot is equal to 1 and colXtop equal to 2
 //tile next to colXtop is n - 1
 
+void	rule_four(int *grid, int size, int *limits)
+{
+	int	index;
+
+	index = -1;
+	while (++index < size)
+	{
+		if (limits[index] == 50 && limits[size + index] == 49)
+			grid[index] = size - 1;
+		if (limits[index] == 49 && limits[size + index] == 50)
+			grid[size * (size - 1) + index] = size - 1;
+	}
+	index = -1;
+	while (++index < size)
+	{
+		if (limits[size * 2 + index] == 50 && limits[size * 3 + index] == 49)
+			grid[index * size] = size - 1;
+		if (limits[size * 2 + index] == 49 && limits[size * 3 + index] == 50)
+			grid[index * size + size - 1] = size - 1;
+	}
+}
+
 void	rule_three(int *grid, int size, int *limits)
 {
 	int	index;
@@ -56,48 +78,48 @@ void	rule_three(int *grid, int size, int *limits)
 
 void	rule_two(int *grid, int size, int *limits)
 {
-	int	iterator;
+	int	index;
 
-	iterator = -1;
-	while (++iterator < size)
+	index = -1;
+	while (++index < size)
 	{
-		if (limits[iterator] - 48 == 1)
-			grid[iterator] = size;
-		if (limits[size + iterator] - 48 == 1)
-			grid[size * (size - 1) + iterator] = size;
+		if (limits[index] - 48 == 1)
+			grid[index] = size;
+		if (limits[size + index] - 48 == 1)
+			grid[size * (size - 1) + index] = size;
 	}
-	iterator = -1;
-	while (++iterator < size)
+	index = -1;
+	while (++index < size)
 	{
-		if (limits[size * 2 + iterator] - 48 == 1)
-			grid[iterator * size] = size;
-		if (limits[size * 3 + iterator] - 48 == 1)
-			grid[iterator * size + size - 1] = size;
+		if (limits[size * 2 + index] - 48 == 1)
+			grid[index * size] = size;
+		if (limits[size * 3 + index] - 48 == 1)
+			grid[index * size + size - 1] = size;
 	}
 }
 
 void	rule_one_vertical(int *grid, int size, int *limits)
 {
-	int	iterator;
+	int	index;
 	int	cord_y;
 
-	iterator = -1;
-	while (++iterator < size)
+	index = -1;
+	while (++index < size)
 	{
 		cord_y = -1;
-		if (limits[iterator] - 48 == size)
+		if (limits[index] - 48 == size)
 		{
 			while (++cord_y < size)
 			{
-				grid[iterator + (cord_y * size)] = 1 + cord_y;
+				grid[index + (cord_y * size)] = 1 + cord_y;
 			}
 		}
 		cord_y = -1;
-		if (limits[size + iterator] - 48 == size)
+		if (limits[size + index] - 48 == size)
 		{
 			while (++cord_y < size)
 			{
-				grid[iterator + (cord_y * size)] = size - cord_y;
+				grid[index + (cord_y * size)] = size - cord_y;
 			}
 		}
 	}
@@ -105,26 +127,26 @@ void	rule_one_vertical(int *grid, int size, int *limits)
 
 void	rule_one_horisontal(int *grid, int size, int *limits)
 {
-	int	iterator;
+	int	index;
 	int	cord_x;
 
-	iterator = -1;
-	while (++iterator < 4)
+	index = -1;
+	while (++index < size)
 	{
 		cord_x = -1;
-		if (limits[8 + iterator] - 48 == size)
+		if (limits[2 * size + index] - 48 == size)
 		{
-			while (++cord_x < 4)
+			while (++cord_x < size)
 			{
-				grid[(iterator * 4) + cord_x] = 1 + cord_x;
+				grid[(index * size) + cord_x] = 1 + cord_x;
 			}
 		}
 		cord_x = -1;
-		if (limits[12 + iterator] - 48 == size)
+		if (limits[3 * size + index] - 48 == size)
 		{
-			while (++cord_x < 4)
+			while (++cord_x < size)
 			{
-				grid[(iterator * 4) + cord_x] = 4 - cord_x;
+				grid[(index * size) + cord_x] = size - cord_x;
 			}
 		}
 	}
@@ -136,4 +158,5 @@ void	solve(int *grid, int size, int *limits)
 	rule_one_horisontal(grid, size, limits);
 	rule_two(grid, size, limits);
 	rule_three(grid, size, limits);
+	rule_four(grid, size, limits);
 }

@@ -12,20 +12,37 @@
 
 #include <unistd.h>
 
-void	get_the_data_out(char *data, int *visibility)
+void	get_the_data_out(char *data, int *visibility, int side_size)
 {
 	int	index;
 
 	index = 0;
 	while (*data != '\0')
 	{
-		if ((int) '0' <= (int) *data && (int) *data <= (int) '4')
+		if ((int) '0' <= (int) *data && (int) *data <= (int) 48 + side_size)
 		{
 			visibility[index] = *data;
 			index++;
 		}
 		data++;
 	}
+}
+
+int	validate_range(char *data, int side_size)
+{
+	while (*data != '\0')
+	{
+		if ((int) ' ' == (int) *data)
+			data++;
+		else if ((int) *data <= 48 + side_size)
+			data++;
+		else
+		{
+			write(1, &"Error\n", 6);
+			return (0);
+		}
+	}
+	return (1);
 }
 
 int	validate_data(int argsc, char *data)
@@ -40,7 +57,7 @@ int	validate_data(int argsc, char *data)
 	counter = 0;
 	while (*data != '\0')
 	{
-		if ((int) '1' <= (int) *data && (int) *data <= (int) '4')
+		if ((int) '1' <= (int) *data && (int) *data <= (int) '9')
 		{
 			counter++;
 		}
