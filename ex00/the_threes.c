@@ -35,14 +35,18 @@ void	set_values_rows(int *tile, int *unused, int offset, int turn_around)
 	}
 }
 
-void	set_values_columns(int *tile, int *unused, int offset, int turn_around) {
+void	set_values_columns(int *tile, int *unused, int offset, int turn_around)
+{
 	int	index;
 
 	index = -1;
-	while (++index < 3) {
-		if (*(tile + offset * 4) != 'x' - 48 || *(tile + (offset + 1) * 4) != 'x' - 48)
+	while (++index < 3)
+	{
+		if (*(tile + offset * 4) != 'x' - 48
+			|| *(tile + (offset + 1) * 4) != 'x' - 48)
 			return ;
-		if (turn_around) {
+		if (turn_around)
+		{
 			if (unused[index])
 			{
 				*(tile + offset * 4) = index + 1;
@@ -73,7 +77,8 @@ void	two_three_rows(int *unused, int *grid, int size, int *limits)
 				unused[grid[size * index] - 1] = 1;
 			}
 		}
-		if (limits[size * 2 + index] == '3' && limits[size * 3 + index] == '2') {
+		if (limits[size * 2 + index] == '3' && limits[size * 3 + index] == '2')
+		{
 			if (grid[size * index + 3] != 'x' - 48)
 			{
 				unused[grid[size * index + 3] - 1] = 0;
@@ -89,7 +94,8 @@ void	two_three_columns(int *unused, int *grid, int size, int *limits)
 	int	index;
 
 	index = -1;
-	while (++index < size) {
+	while (++index < size)
+	{
 		if (limits[index] == '2' && limits[size + index] == '3')
 		{
 			if (grid[index] != 'x' - 48)
