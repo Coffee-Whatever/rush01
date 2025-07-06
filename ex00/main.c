@@ -6,7 +6,7 @@
 /*   By: pklimkie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 11:22:32 by pklimkie          #+#    #+#             */
-/*   Updated: 2025/07/06 11:04:57 by pklimkie         ###   ########.fr       */
+/*   Updated: 2025/07/06 16:19:20 by pklimkie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 int		validate_data(int argsc, char *data);
 void	get_the_data_out(char *data, int *visibility, int side_size);
 void	fill_it(int *grid, int side);
-void	solve(int *grid, int size, int *limits);
+int		solve(int *grid, int size, int *limits);
 void	display(int *grid, int side);
 int		validate_range(char *data, int side_size);
 
@@ -39,7 +39,8 @@ int	main(int argsc, char **argsv)
 	lenght_of_array = side_size * side_size;
 	grid = malloc(lenght_of_array * 4);
 	fill_it(grid, side_size);
-	solve(grid, side_size, visibility);
+	if (solve(grid, side_size, visibility))
+		return (0);
 	display(grid, side_size);
 	free(grid);
 	free(visibility);
